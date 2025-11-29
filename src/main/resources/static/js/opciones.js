@@ -63,7 +63,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!valido) {
             e.preventDefault();
-            alert("Corrige los errores antes de continuar.");
+            Swal.fire({
+                icon: "warning",
+                title: "Validación requerida",
+                text: "Corrige los errores antes de continuar.",
+                confirmButtonColor: "#3085d6"
+            });
         }
     });
 });
