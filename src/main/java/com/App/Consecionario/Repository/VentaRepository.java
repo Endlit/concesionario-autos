@@ -14,26 +14,28 @@ import java.util.List;
 public class VentaRepository {
 
     private final JdbcTemplate jdbc;
+    private final VentaOpcionRepository ventaOpcionRepository;
 
     public List<Venta> findAll() {
-        return jdbc.query("""
-                SELECT v.id, v.fecha, v.precio_venta, v.matricula_vehiculo_nuevo,
-                       ve.matricula, ve.marca, ve.modelo,
-                       u.dni AS vendedor_dni, u.nombre AS vendedor_nombre, u.rol
-                FROM venta v
-                LEFT JOIN vehiculo ve ON v.vehiculo_matricula = ve.matricula
-                LEFT JOIN usuario u ON v.dni_vendedor = u.dni
-            """, (rs, row) -> {
+        List<Venta> ventas = jdbc.query("""
+                    SELECT v.id, v.fecha, v.precio_venta,
+                           v.vehiculo_matricula AS matriculaVehiculoNuevo,
+                           ve.marca, ve.modelo,
+                           u.dni AS vendedor_dni, u.nombre AS vendedor_nombre, u.rol
+                    FROM venta v
+                    LEFT JOIN vehiculo ve ON v.vehiculo_matricula = ve.matricula
+                    LEFT JOIN usuario u ON v.dni_vendedor = u.dni
+                """, (rs, row) -> {
             Venta venta = new Venta();
             venta.setId(rs.getLong("id"));
             venta.setFecha(rs.getDate("fecha").toLocalDate());
             venta.setPrecioVenta(rs.getDouble("precio_venta"));
-            venta.setMatriculaVehiculoNuevo(rs.getString("matricula_vehiculo_nuevo"));
+            venta.setMatriculaVehiculoNuevo(rs.getString("matriculaVehiculoNuevo"));
 
-            // Vehículo asociado
-            if (rs.getString("matricula") != null) {
+            // Vehículo
+            if (rs.getString("matriculaVehiculoNuevo") != null) {
                 Vehiculo ve = new Vehiculo();
-                ve.setMatricula(rs.getString("matricula"));
+                ve.setMatricula(rs.getString("matriculaVehiculoNuevo"));
                 ve.setMarca(rs.getString("marca"));
                 ve.setModelo(rs.getString("modelo"));
                 venta.setVehiculo(ve);
@@ -50,39 +52,46 @@ public class VentaRepository {
 
             return venta;
         });
+
+        // 🔥 ESTA ES LA PARTE QUE FALTABA — Cargar las opciones
+        ventas.forEach(v -> {
+            v.setOpciones(ventaOpcionRepository.findByVentaId(v.getId()));
+        });
+
+        return ventas;
     }
 
-
     public Venta save(Venta v) {
-        if(v.getId() == null) {
+        if (v.getId() == null) {
             jdbc.update("""
-                INSERT INTO venta(fecha,precio_venta,vehiculo_matricula,dni_vendedor,matricula_vehiculo_nuevo)
-                VALUES (?,?,?,?,?)
-            """,
+                        INSERT INTO venta(fecha,precio_venta,vehiculo_matricula,dni_vendedor,matricula_vehiculo_nuevo)
+                        VALUES (?,?,?,?,?)
+                    """,
                     v.getFecha(),
                     v.getPrecioVenta(),
-                    v.getVehiculo()!=null? v.getVehiculo().getMatricula():null,
-                    v.getVendedor()!=null? v.getVendedor().getDni():null,
+                    v.getVehiculo() != null ? v.getVehiculo().getMatricula() : null,
+                    v.getVendedor() != null ? v.getVendedor().getDni() : null,
                     v.getMatriculaVehiculoNuevo());
 
             Long id = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
             v.setId(id);
         } else {
-            jdbc.update("""
-                UPDATE venta SET fecha=?,precio_venta=?,vehiculo_matricula=?,dni_vendedor=?,matricula_vehiculo_nuevo=?
-                WHERE id=?
-            """,
+            jdbc.update(
+                    """
+                                UPDATE venta SET fecha=?,precio_venta=?,vehiculo_matricula=?,dni_vendedor=?,matricula_vehiculo_nuevo=?
+                                WHERE id=?
+                            """,
                     v.getFecha(),
                     v.getPrecioVenta(),
-                    v.getVehiculo()!=null? v.getVehiculo().getMatricula():null,
-                    v.getVendedor()!=null? v.getVendedor().getDni():null,
+                    v.getVehiculo() != null ? v.getVehiculo().getMatricula() : null,
+                    v.getVendedor() != null ? v.getVendedor().getDni() : null,
                     v.getMatriculaVehiculoNuevo(),
                     v.getId());
         }
         return v;
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         jdbc.update("DELETE FROM venta WHERE id=?", id);
     }
 

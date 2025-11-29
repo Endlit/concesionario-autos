@@ -31,7 +31,8 @@ header h1 {
     box-shadow: 0 4px 10px #00cbff;
 }
 
-h1, h2 {
+h1,
+h2 {
     color: #32335dff;
     margin-bottom: 20px;
     font-weight: 600;
@@ -49,7 +50,8 @@ thead {
     color: white;
 }
 
-th, td {
+th,
+td {
     padding: 12px;
     border-bottom: 1px solid #ccc;
     text-align: left;
@@ -59,7 +61,8 @@ tbody tr:hover {
     background: #f1f1f1;
 }
 
-a.btn, button {
+a.btn,
+button {
     display: inline-block;
     text-decoration: none;
     background: #00cbff;
@@ -71,7 +74,8 @@ a.btn, button {
     border: none;
 }
 
-a.btn:hover, button:hover {
+a.btn:hover,
+button:hover {
     background: #f46ea4;
 }
 
@@ -103,7 +107,9 @@ label {
     font-weight: bold;
 }
 
-input[type="text"], input[type="number"], select {
+input[type="text"],
+input[type="number"],
+select {
     width: 100%;
     padding: 10px;
     border-radius: 6px;
@@ -191,6 +197,28 @@ main h2 {
 main p {
     font-size: 18px;
     margin-bottom: 25px;
+}
+
+/* Icono ELIMINAR (trash) */
+td a i.bx-trash {
+    color: #ffffff;
+    background: #dc3545;
+}
+
+td a i.bx-trash:hover {
+    background: #b52a36;
+    transform: scale(1.15);
+}
+
+/* Icono EDITAR (pen) */
+td a i.bx-pen-alt {
+    color: #ffffff;
+    background: #0056be;
+}
+
+td a i.bx-pen-alt:hover {
+    background: #003e8b;
+    transform: scale(1.15);
 }
 
 /*BOTÓN*/
