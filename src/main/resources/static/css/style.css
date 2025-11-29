@@ -161,36 +161,6 @@ main p {
     color: #444;
 }
 
-.btn-volver {
-    cursor: pointer;
-    border: 4px solid black;
-    background-color: gray;
-    padding-bottom: 10px;
-    transition: 0.1s ease-in-out;
-    user-select: none;
-    display: inline-block;
-    border-radius: 8px;
-}
-
-.button {
-    background-color: #dddddd;
-    border: 4px solid #fff;
-    padding: 3px 8px;
-    display: inline-block;
-    border-radius: 4px;
-}
-
-.button span {
-    font-size: 1.2em;
-    letter-spacing: 1px;
-    font-weight: bold;
-}
-
-.box-button:active {
-    padding: 0;
-    margin-bottom: 10px;
-    transform: translateY(10px);
-}
 
 /*errores*/
 
@@ -205,35 +175,38 @@ select.input-error {
     border: 2px solid red;
 }
 
-td a i {
-    font-size: 22px;
-    padding: 8px;
-    border-radius: 50%;
-    transition: 0.3s ease;
-    cursor: pointer;
+/*CONTENIDO DE ERRORES*/
+
+main {
+    text-align: center;
+    padding: 60px 20px;
 }
 
-/* Icono ELIMINAR (trash) */
-td a i.bx-trash {
-    color: #ffffff;
-    background: #dc3545;
-}
-td a i.bx-trash:hover {
-    background: #b52a36;
-    transform: scale(1.15);
+main h2 {
+    color: #d32f2f; 
+    font-size: 32px;
+    margin-bottom: 10px;
 }
 
-/* Icono EDITAR (pen) */
-td a i.bx-pen-alt {
-    color: #ffffff;
-    background: #0056be;
-}
-td a i.bx-pen-alt:hover {
-    background: #003e8b;
-    transform: scale(1.15);
+main p {
+    font-size: 18px;
+    margin-bottom: 25px;
 }
 
-/* Separación entre iconos */
-td a {
-    margin-right: 8px;
+/*BOTÓN*/
+
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #1976d2; /* azul fuerte */
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 8px;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #0d47a1;
+    transform: scale(1.05);
 }

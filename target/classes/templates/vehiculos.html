@@ -8,8 +8,7 @@
     <link href='https://cdn.boxicons.com/3.0.5/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
 </head>
 <body>
-
-<a th:href="@{/}">← Volver</a>
+<a class="btn" th:href="@{/}">Volver</a>
 <h1>Vehículos</h1>
 
 <form th:action="@{/vehiculos/save}" method="post" th:object="${vehiculo}">
