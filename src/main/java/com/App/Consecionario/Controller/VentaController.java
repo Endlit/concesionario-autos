@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +28,8 @@ public class VentaController {
         model.addAttribute("ventas", ventaRepo.findAll());
         model.addAttribute("venta", new Venta());
 
-        // datos para el formulario
         model.addAttribute("vehiculos", vehiculoRepo.findAll());
-        // vendedores: filtrar por rol si quieres, aquí incluimos todos
-        model.addAttribute("usuarios", usuarioRepo.findAll());
+        model.addAttribute("usuarios", usuarioRepo.findAll()); // puedes filtrar por ROL si deseas
         model.addAttribute("opciones", opcionRepo.findAll());
         return "ventas";
     }
@@ -50,59 +47,55 @@ public class VentaController {
     public String save(
             @RequestParam String vendedorDni,
             @RequestParam String vehiculoMatricula,
-            @RequestParam(required = false) String clienteDni,
             @RequestParam(required = false) String vehiculoUsadoMatricula,
             @RequestParam(required = false) Double precioVenta,
+            @RequestParam(required = false) Double precioOpcionAplicado,    // ← este campo viene del form
             @RequestParam(required = false, name = "opcionIds") Long[] opcionIds
     ) {
 
-        Venta v = new Venta();
-        v.setFecha(LocalDate.now());
-        v.setPrecioVenta(precioVenta);
-        // vehiculo nuevo
-        vehiculoRepo.findById(vehiculoMatricula).ifPresent(v::setVehiculo);
-        // vendedor
-        usuarioRepo.findById(vendedorDni).ifPresent(v::setVendedor);
+        Venta venta = new Venta();
+        venta.setFecha(LocalDate.now());
+        venta.setPrecioVenta(precioVenta);
 
-        // guardamos venta primero (para tener id)
-        Venta saved = ventaRepo.save(v);
+        vehiculoRepo.findById(vehiculoMatricula).ifPresent(venta::setVehiculo);
+        usuarioRepo.findById(vendedorDni).ifPresent(venta::setVendedor);
 
-        // si se entregó vehículo usado (solo registro simple en este CRUD)
-        if (vehiculoUsadoMatricula != null && !vehiculoUsadoMatricula.isBlank()) {
-            // Opcional: marcarlo en la tabla Vehiculo como entregado (fecha, tasacion) según tu modelo.
-            // Aquí solo lo dejamos como referencia en matriculaVehiculoNuevo (si lo deseas).
-            // saved.setMatriculaVehiculoNuevo(vehiculoUsadoMatricula);
+        if(vehiculoUsadoMatricula != null && !vehiculoUsadoMatricula.isBlank()){
+            venta.setMatriculaVehiculoNuevo(vehiculoUsadoMatricula);
         }
 
-        // Opciones aplicadas
-        if (opcionIds != null && opcionIds.length > 0) {
+        Venta savedVenta = ventaRepo.save(venta);
+
+
+        // *** OPCIONES con precioAplicado propio ***
+        if(opcionIds != null && opcionIds.length > 0){
             List<VentaOpcion> lista = new ArrayList<>();
-            for (Long id : opcionIds) {
-                Opcion op = opcionRepo.findById(id).orElse(null);
-                if (op != null) {
+
+            for(Long id : opcionIds){
+                opcionRepo.findById(id).ifPresent(op -> {
                     VentaOpcion vo = new VentaOpcion();
-                    vo.setVenta(saved);
+                    vo.setVenta(savedVenta);
                     vo.setOpcion(op);
-                    // ejemplo: precioAplicado igual a 0 por defecto; puedes ajustar
-                    vo.setPrecioAplicado(0.0);
+
+                    vo.setPrecioAplicado(precioOpcionAplicado);
                     lista.add(vo);
-                }
+                });
             }
+
             ventaOpcionRepo.saveAll(lista);
-            saved.setOpciones(lista);
-            ventaRepo.save(saved);
+            savedVenta.setOpciones(lista);
+            ventaRepo.save(savedVenta);
         }
 
         return "redirect:/ventas";
     }
+
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        // borrar opciones relacionadas primero (cascade podría hacerlo si está configurado)
-        ventaOpcionRepo.findAll().stream()
-                .filter(vo -> vo.getVenta() != null && vo.getVenta().getId().equals(id))
-                .forEach(vo -> ventaOpcionRepo.deleteById(vo.getId()));
+        ventaOpcionRepo.deleteByVentaId(id);
         ventaRepo.deleteById(id);
         return "redirect:/ventas";
     }
+
 }

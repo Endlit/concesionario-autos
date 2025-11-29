@@ -1,39 +1,35 @@
 package com.App.Consecionario.Controller;
 
-import com.App.Consecionario.Entity.Emun.Rol;
 import com.App.Consecionario.Entity.Usuario;
-import com.App.Consecionario.Repository.UsuarioRepository;
+import com.App.Consecionario.Services.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    private final UsuarioRepository repo;
+    private final UsuarioService service;
 
     @GetMapping
     public String findAll(Model model) {
-        model.addAttribute("usuarios", repo.findAll());
-        model.addAttribute("usuario", new Usuario());
-        model.addAttribute("roles", Rol.values());
-        return "usuarios";
+        model.addAttribute("usuarios", service.listar());
+        model.addAttribute("usuario", new Usuario()); // Para formulario
+        return "usuarios"; // Vista Thymeleaf
     }
 
     @PostMapping("/save")
     public String save(@ModelAttribute Usuario u) {
-        repo.save(u);
+        service.guardar(u);
         return "redirect:/usuarios";
     }
 
     @GetMapping("/delete/{dni}")
     public String delete(@PathVariable String dni) {
-        repo.deleteById(dni);
+        service.eliminar(dni);
         return "redirect:/usuarios";
     }
 

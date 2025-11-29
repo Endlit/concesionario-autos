@@ -1,6 +1,5 @@
 package com.App.Consecionario.Controller;
 
-import com.App.Consecionario.Entity.Usuario;
 import com.App.Consecionario.Entity.Vehiculo;
 import com.App.Consecionario.Repository.UsuarioRepository;
 import com.App.Consecionario.Repository.VehiculoRepository;
@@ -8,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,11 +18,9 @@ public class VehiculoController {
 
     @GetMapping
     public String findAll(Model model) {
-        List<Vehiculo> vehiculos = repo.findAll();
-        List<Usuario> usuarios = usuarioRepo.findAll();
-        model.addAttribute("vehiculos", vehiculos);
+        model.addAttribute("vehiculos", repo.findAll());
         model.addAttribute("vehiculo", new Vehiculo());
-        model.addAttribute("usuarios", usuarios); // para asignar cliente si hace falta
+        model.addAttribute("usuarios", usuarioRepo.findAll());
         return "vehiculos";
     }
 
@@ -34,10 +29,7 @@ public class VehiculoController {
                        @RequestParam(required = false) String clienteDni) {
 
         if (clienteDni != null && !clienteDni.isBlank()) {
-            Usuario cliente = usuarioRepo.findById(clienteDni).orElse(null);
-            vehiculo.setCliente(cliente);
-        } else {
-            vehiculo.setCliente(null);
+            usuarioRepo.findById(clienteDni).ifPresent(vehiculo::setCliente);
         }
 
         repo.save(vehiculo);
@@ -46,8 +38,7 @@ public class VehiculoController {
 
     @GetMapping("/delete/{matricula}")
     public String delete(@PathVariable String matricula) {
-        repo.deleteById(matricula);
+        repo.delete(matricula);
         return "redirect:/vehiculos";
     }
-
 }
