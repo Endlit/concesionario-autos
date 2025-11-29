@@ -112,7 +112,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!valido) {
             e.preventDefault();
-            alert("Corrige los errores antes de guardar el usuario.");
+            Swal.fire({
+                icon: "error",
+                title: "Datos inválidos",
+                text: "Corrige los errores antes de guardar el usuario.",
+                confirmButtonColor: "#d33"
+            });
         }
     });
 

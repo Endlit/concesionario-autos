@@ -14,15 +14,12 @@ header {
     box-shadow: 0 2px 8px #32335d;
 }
 
-
 header h1 {
     margin: 0;
     font-size: 32px;
     font-weight: bold;
     letter-spacing: 3px;
 }
-
-
 
 .container {
     width: 90%;
@@ -34,9 +31,6 @@ header h1 {
     box-shadow: 0 4px 10px #00cbff;
 }
 
-
-
-
 h1, h2 {
     color: #32335dff;
     margin-bottom: 20px;
@@ -44,19 +38,16 @@ h1, h2 {
     text-align: center;
 }
 
-
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-
 thead {
     background: #00cbff;
     color: white;
 }
-
 
 th, td {
     padding: 12px;
@@ -64,12 +55,9 @@ th, td {
     text-align: left;
 }
 
-
 tbody tr:hover {
     background: #f1f1f1;
 }
-
-
 
 a.btn, button {
     display: inline-block;
@@ -83,33 +71,25 @@ a.btn, button {
     border: none;
 }
 
-
 a.btn:hover, button:hover {
     background: #f46ea4;
 }
-
-
 
 .btn-delete {
     background: #dc3545;
 }
 
-
 .btn-delete:hover {
     background: #b52a36;
 }
-
 
 .btn-success {
     background: #0056be;
 }
 
-
 .btn-success:hover {
     background: #0056be;
 }
-
-
 
 form {
     width: 100%;
@@ -117,13 +97,11 @@ form {
     margin: 0 auto;
 }
 
-
 label {
     display: block;
     margin: 12px 0 6px;
     font-weight: bold;
 }
-
 
 input[type="text"], input[type="number"], select {
     width: 100%;
@@ -133,12 +111,10 @@ input[type="text"], input[type="number"], select {
     margin-bottom: 15px;
 }
 
-
 button[type="submit"] {
     width: 100%;
     background: #0056be;
 }
-
 
 .back-link {
     display: inline-block;
@@ -215,6 +191,7 @@ main p {
     margin-bottom: 10px;
     transform: translateY(10px);
 }
+
 .error-msg {
     color: red;
     font-size: 0.85em;

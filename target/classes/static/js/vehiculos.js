@@ -141,7 +141,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!valido) {
             e.preventDefault();
-            alert("Corrige los errores antes de guardar el vehículo.");
+            Swal.fire({
+                icon: "warning",
+                title: "Revisa los datos",
+                text: "Corrige los errores antes de guardar el vehículo.",
+                confirmButtonColor: "#f39c12"
+            });
         }
     });
 
