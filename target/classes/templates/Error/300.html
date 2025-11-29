@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error 300 - Redirección Múltiple</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>Concesionario</h1>
+    <nav>
+        <a th:href="@{/opciones}">Opciones</a> |
+        <a th:href="@{/usuarios}">Usuarios</a> |
+        <a th:href="@{/vehiculos}">Vehiculos</a> |
+        <a th:href="@{/ventas}">Ventas</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Error 300</h2>
+    <p>La URL solicitada genera múltiples redirecciones.</p>
+    <br>
+    <a class="btn" th:href="@{/}">Volver al Inicio</a>
+</main>
+</body>
+</html>
