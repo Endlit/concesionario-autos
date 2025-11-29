@@ -25,4 +25,5 @@ public class VentaOpcion {
     @JoinColumn(name = "opcion_id")
     @NotNull(message = "Debe seleccionarse una opción")
     private Opcion opcion;
+
 }
