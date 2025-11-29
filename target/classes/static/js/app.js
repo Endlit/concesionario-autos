@@ -6,8 +6,8 @@ console.log("app.js cargado correctamente");
 document.addEventListener("DOMContentLoaded", () => {
     const hoy = new Date();
     const año = hoy.getFullYear();
-    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-    const dia = String(hoy.getDate()).padStart(2, '0');
+    const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoy.getDate()).padStart(2, "0");
 
     const fechaFormateada = `${año}-${mes}-${dia}`;
     const inputFecha = document.getElementById("fechaCesion");
@@ -15,10 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (inputFecha) {
         inputFecha.value = fechaFormateada;
     } else {
-        console.warn("⚠ El elemento con id 'fechaCesion' no existe en esta página.");
+        console.warn(
+            "⚠ El elemento con id 'fechaCesion' no existe en esta página."
+        );
     }
 });
-
 
 // ================================
 // 🗑 Eliminar con SweetAlert2
@@ -36,8 +37,8 @@ document.addEventListener("click", function (event) {
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Sí, eliminar",
-        cancelButtonText: "Cancelar"
-    }).then(result => {
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = url;
         }
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         Swal.fire({
             title: "Error detectado",
             text: error.textContent,
-            icon: "error"
+            icon: "error",
         });
     }
 });

@@ -42,17 +42,16 @@ public class UsuarioRepository {
         return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
     }
 
-
     public void save(Usuario u) {
         if (findAll().stream().noneMatch(x -> x.getDni().equals(u.getDni()))) {
             jdbc.update("""
-                INSERT INTO usuario(dni,nombre,direccion,telefono,rol)
-                VALUES (?,?,?,?,?)
-            """, u.getDni(), u.getNombre(), u.getDireccion(), u.getTelefono(), u.getRol().name());
+                        INSERT INTO usuario(dni,nombre,direccion,telefono,rol)
+                        VALUES (?,?,?,?,?)
+                    """, u.getDni(), u.getNombre(), u.getDireccion(), u.getTelefono(), u.getRol().name());
         } else {
             jdbc.update("""
-                UPDATE usuario SET nombre=?,direccion=?,telefono=?,rol=? WHERE dni=?
-            """, u.getNombre(), u.getDireccion(), u.getTelefono(), u.getRol().name(), u.getDni());
+                        UPDATE usuario SET nombre=?,direccion=?,telefono=?,rol=? WHERE dni=?
+                    """, u.getNombre(), u.getDireccion(), u.getTelefono(), u.getRol().name(), u.getDni());
         }
     }
 
@@ -64,6 +63,5 @@ public class UsuarioRepository {
         // Luego el usuario
         jdbc.update("DELETE FROM usuario WHERE dni=?", dni);
     }
-
 
 }

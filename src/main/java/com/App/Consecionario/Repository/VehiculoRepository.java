@@ -18,10 +18,10 @@ public class VehiculoRepository {
 
     public List<Vehiculo> findAll() {
         return jdbc.query("""
-                SELECT v.*, u.dni, u.nombre, u.direccion, u.telefono, u.rol
-                FROM vehiculo v
-                LEFT JOIN usuario u ON v.dni_cliente = u.dni
-            """, (rs, row) -> {
+                    SELECT v.*, u.dni, u.nombre, u.direccion, u.telefono, u.rol
+                    FROM vehiculo v
+                    LEFT JOIN usuario u ON v.dni_cliente = u.dni
+                """, (rs, row) -> {
             Vehiculo v = new Vehiculo();
             v.setMatricula(rs.getString("matricula"));
             v.setMarca(rs.getString("marca"));
@@ -29,8 +29,7 @@ public class VehiculoRepository {
             v.setCilindrada(rs.getString("cilindrada"));
             v.setPrecio(rs.getInt("precio"));
             v.setPrecioTasacion(rs.getDouble("precio_tasacion"));
-            v.setFechaCesion(rs.getDate("fecha_cesion") != null ?
-                    rs.getDate("fecha_cesion").toLocalDate() : null);
+            v.setFechaCesion(rs.getDate("fecha_cesion") != null ? rs.getDate("fecha_cesion").toLocalDate() : null);
 
             // Cliente asociado
             if (rs.getString("dni") != null) {
@@ -49,11 +48,11 @@ public class VehiculoRepository {
 
     public Optional<Vehiculo> findById(String matricula) {
         String sql = """
-            SELECT v.*, u.dni, u.nombre, u.direccion, u.telefono, u.rol
-            FROM vehiculo v
-            LEFT JOIN usuario u ON v.dni_cliente = u.dni
-            WHERE matricula=?
-            """;
+                SELECT v.*, u.dni, u.nombre, u.direccion, u.telefono, u.rol
+                FROM vehiculo v
+                LEFT JOIN usuario u ON v.dni_cliente = u.dni
+                WHERE matricula=?
+                """;
 
         List<Vehiculo> result = jdbc.query(sql, (rs, row) -> {
             Vehiculo v = new Vehiculo();
@@ -63,8 +62,7 @@ public class VehiculoRepository {
             v.setCilindrada(rs.getString("cilindrada"));
             v.setPrecio(rs.getInt("precio"));
             v.setPrecioTasacion(rs.getDouble("precio_tasacion"));
-            v.setFechaCesion(rs.getDate("fecha_cesion") != null ?
-                    rs.getDate("fecha_cesion").toLocalDate() : null);
+            v.setFechaCesion(rs.getDate("fecha_cesion") != null ? rs.getDate("fecha_cesion").toLocalDate() : null);
 
             // Cliente asociado
             if (rs.getString("dni") != null) {
@@ -85,17 +83,21 @@ public class VehiculoRepository {
 
     public void save(Vehiculo v) {
         if (findAll().stream().noneMatch(x -> x.getMatricula().equals(v.getMatricula()))) {
-            jdbc.update("""
-                INSERT INTO vehiculo(matricula,marca,modelo,cilindrada,precio,precio_tasacion,fecha_cesion,dni_cliente)
-                VALUES (?,?,?,?,?,?,?,?)
-            """, v.getMatricula(), v.getMarca(), v.getModelo(), v.getCilindrada(),
+            jdbc.update(
+                    """
+                                INSERT INTO vehiculo(matricula,marca,modelo,cilindrada,precio,precio_tasacion,fecha_cesion,dni_cliente)
+                                VALUES (?,?,?,?,?,?,?,?)
+                            """,
+                    v.getMatricula(), v.getMarca(), v.getModelo(), v.getCilindrada(),
                     v.getPrecio(), v.getPrecioTasacion(), v.getFechaCesion(),
                     v.getCliente() != null ? v.getCliente().getDni() : null);
         } else {
-            jdbc.update("""
-                UPDATE vehiculo SET marca=?,modelo=?,cilindrada=?,precio=?,precio_tasacion=?,fecha_cesion=?,dni_cliente=?
-                WHERE matricula=?
-            """, v.getMarca(), v.getModelo(), v.getCilindrada(), v.getPrecio(), v.getPrecioTasacion(),
+            jdbc.update(
+                    """
+                                UPDATE vehiculo SET marca=?,modelo=?,cilindrada=?,precio=?,precio_tasacion=?,fecha_cesion=?,dni_cliente=?
+                                WHERE matricula=?
+                            """,
+                    v.getMarca(), v.getModelo(), v.getCilindrada(), v.getPrecio(), v.getPrecioTasacion(),
                     v.getFechaCesion(), v.getCliente() != null ? v.getCliente().getDni() : null,
                     v.getMatricula());
         }
@@ -105,8 +107,7 @@ public class VehiculoRepository {
         Integer existe = jdbc.queryForObject(
                 "SELECT COUNT(*) FROM vehiculo WHERE matricula = ?",
                 Integer.class,
-                matricula
-        );
+                matricula);
 
         if (existe != null && existe > 0) {
             jdbc.update("DELETE FROM vehiculo WHERE matricula = ?", matricula);

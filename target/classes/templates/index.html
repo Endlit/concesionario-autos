@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Concesionario</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
-<header>
-    <h1>Concesionario</h1>
-    <nav>
-        <a th:href="@{/opciones}">Opciones</a> |
-        <a th:href="@{/usuarios}">Usuarios</a> |
-        <a th:href="@{/vehiculos}">Vehiculos</a> |
-        <a th:href="@{/ventas}">Ventas</a>
-    </nav>
-</header>
+    <header>
+        <h1>Concesionario</h1>
+        <nav>
+            <a th:href="@{/opciones}">Opciones</a> |
+            <a th:href="@{/usuarios}">Usuarios</a> |
+            <a th:href="@{/vehiculos}">Vehiculos</a> |
+            <a th:href="@{/ventas}">Ventas</a>
+        </nav>
+    </header>
 
-<main>
-    <p>Bienvenido al panel del concesionario. Usa el menú para gestionar los recursos.</p>
-</main>
+    <main>
+        <p>Bienvenido al panel del concesionario. Usa el menú para gestionar los recursos.</p>
+    </main>
 
-<script th:src="@{/js/app.js}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{/js/app.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
+
 </html>

@@ -26,7 +26,7 @@ public class VehiculoController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Vehiculo vehiculo,
-                       @RequestParam(required = false) String clienteDni) {
+            @RequestParam(required = false) String clienteDni) {
 
         if (clienteDni != null && !clienteDni.isBlank()) {
             usuarioRepo.findById(clienteDni).ifPresent(vehiculo::setCliente);

@@ -1,6 +1,5 @@
 package com.App.Consecionario.Controller;
 
-import com.App.Consecionario.Entity.Opcion;
 import com.App.Consecionario.Entity.Venta;
 import com.App.Consecionario.Entity.VentaOpcion;
 import com.App.Consecionario.Repository.*;
@@ -49,9 +48,8 @@ public class VentaController {
             @RequestParam String vehiculoMatricula,
             @RequestParam(required = false) String vehiculoUsadoMatricula,
             @RequestParam(required = false) Double precioVenta,
-            @RequestParam(required = false) Double precioOpcionAplicado,    // ← este campo viene del form
-            @RequestParam(required = false, name = "opcionIds") Long[] opcionIds
-    ) {
+            @RequestParam(required = false) Double precioOpcionAplicado, // ← este campo viene del form
+            @RequestParam(required = false, name = "opcionIds") Long[] opcionIds) {
 
         Venta venta = new Venta();
         venta.setFecha(LocalDate.now());
@@ -60,18 +58,17 @@ public class VentaController {
         vehiculoRepo.findById(vehiculoMatricula).ifPresent(venta::setVehiculo);
         usuarioRepo.findById(vendedorDni).ifPresent(venta::setVendedor);
 
-        if(vehiculoUsadoMatricula != null && !vehiculoUsadoMatricula.isBlank()){
+        if (vehiculoUsadoMatricula != null && !vehiculoUsadoMatricula.isBlank()) {
             venta.setMatriculaVehiculoNuevo(vehiculoUsadoMatricula);
         }
 
         Venta savedVenta = ventaRepo.save(venta);
 
-
         // *** OPCIONES con precioAplicado propio ***
-        if(opcionIds != null && opcionIds.length > 0){
+        if (opcionIds != null && opcionIds.length > 0) {
             List<VentaOpcion> lista = new ArrayList<>();
 
-            for(Long id : opcionIds){
+            for (Long id : opcionIds) {
                 opcionRepo.findById(id).ifPresent(op -> {
                     VentaOpcion vo = new VentaOpcion();
                     vo.setVenta(savedVenta);
@@ -89,7 +86,6 @@ public class VentaController {
 
         return "redirect:/ventas";
     }
-
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
