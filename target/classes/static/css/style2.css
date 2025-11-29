@@ -8,10 +8,11 @@
 }
 
 header {
-    background: #222;
-    padding: 20px;
+     background: #0056be;
     color: white;
+    padding: 25px 0;
     text-align: center;
+    box-shadow: 0 2px 8px #32335d;
 }
 
 header h1 {
