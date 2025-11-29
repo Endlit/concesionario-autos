@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Usuarios</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href='https://cdn.boxicons.com/3.0.5/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href='https://cdn.boxicons.com/3.0.5/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
 </head>
 <body>
 <a th:href="@{/}">← Volver</a>
@@ -52,7 +54,7 @@
         <td th:text="${u.nombre}"></td>
         <td th:text="${u.rol}"></td>
         <td>
-            <a th:href="@{'/usuarios/delete/' + ${u.dni}}" data-delete>Eliminar</a>
+            <a th:href="@{'/usuarios/delete/' + ${u.dni}}" data-delete><i class='bxr bx-trash' style='color:#000000'></i></a>
         </td>
     </tr>
     </tbody>

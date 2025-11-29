@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Ventas</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href='https://cdn.boxicons.com/3.0.5/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href='https://cdn.boxicons.com/3.0.5/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
 </head>
 <body>
 <a th:href="@{/}">← Volver</a>
@@ -68,7 +70,7 @@
             <span th:each="vo : ${vt.opciones}" th:text="${vo.opcion.nombre} + ' '" />
         </td>
         <td>
-            <a th:href="@{'/ventas/delete/' + ${vt.id}}" data-delete>Eliminar</a>
+            <a th:href="@{'/ventas/delete/' + ${vt.id}}" data-delete><i class='bxr bx-trash' style='color:#000000'></i></a>
         </td>
     </tr>
     </tbody>

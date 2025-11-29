@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Vehículos</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href='https://cdn.boxicons.com/3.0.5/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href='https://cdn.boxicons.com/3.0.5/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
 </head>
 <body>
 
@@ -81,7 +83,7 @@
         <td th:text="${v.cliente != null ? v.cliente.nombre : '-'}"></td>
 
         <td>
-            <a th:href="@{'/vehiculos/delete/' + ${v.matricula}}" data-delete>Eliminar</a>
+            <a th:href="@{'/vehiculos/delete/' + ${v.matricula}}" data-delete><i class='bxr bx-trash' style='color:#000000'></i></a>
         </td>
     </tr>
     </tbody>

@@ -57,7 +57,13 @@ public class UsuarioRepository {
     }
 
     public void delete(String dni) {
+
+        // Primero borra vehículos relacionados
+        jdbc.update("DELETE FROM vehiculo WHERE dni_cliente=?", dni);
+
+        // Luego el usuario
         jdbc.update("DELETE FROM usuario WHERE dni=?", dni);
     }
+
 
 }

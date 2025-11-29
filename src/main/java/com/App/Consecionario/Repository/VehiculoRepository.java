@@ -102,7 +102,15 @@ public class VehiculoRepository {
     }
 
     public void delete(String matricula) {
-        jdbc.update("DELETE FROM vehiculo WHERE matricula=?", matricula);
+        Integer existe = jdbc.queryForObject(
+                "SELECT COUNT(*) FROM vehiculo WHERE matricula = ?",
+                Integer.class,
+                matricula
+        );
+
+        if (existe != null && existe > 0) {
+            jdbc.update("DELETE FROM vehiculo WHERE matricula = ?", matricula);
+        }
     }
 
 }

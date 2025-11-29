@@ -205,4 +205,35 @@ select.input-error {
     border: 2px solid red;
 }
 
+td a i {
+    font-size: 22px;
+    padding: 8px;
+    border-radius: 50%;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
 
+/* Icono ELIMINAR (trash) */
+td a i.bx-trash {
+    color: #ffffff;
+    background: #dc3545;
+}
+td a i.bx-trash:hover {
+    background: #b52a36;
+    transform: scale(1.15);
+}
+
+/* Icono EDITAR (pen) */
+td a i.bx-pen-alt {
+    color: #ffffff;
+    background: #0056be;
+}
+td a i.bx-pen-alt:hover {
+    background: #003e8b;
+    transform: scale(1.15);
+}
+
+/* Separación entre iconos */
+td a {
+    margin-right: 8px;
+}
