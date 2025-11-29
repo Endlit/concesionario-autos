@@ -2,16 +2,26 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: #f4f6f9;
+    background: linear-gradient(to bottom, #332717, #200e38);
     color: #00347d;
+    min-height: 100vh;
+}
+
+.op{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#FFF9f4;
+    color: #00347d;
+    min-height: 100vh;
 }
 
 header {
-    background: #0056be;
+    background: linear-gradient(45deg, #412a9c, #1b66ff);
     color: white;
-    padding: 25px 0;
+    padding: 50px 0;
     text-align: center;
-    box-shadow: 0 2px 8px #32335d;
+    box-shadow: 0 2px 5px #412a9c;
 }
 
 header h1 {
@@ -76,7 +86,7 @@ button {
 
 a.btn:hover,
 button:hover {
-    background: #f46ea4;
+    background: #412a9c;
 }
 
 .btn-delete {
@@ -203,23 +213,16 @@ main p {
 td a i.bx-trash {
     color: #ffffff;
     background: #dc3545;
+    border-radius: 10px;
 }
 
 td a i.bx-trash:hover {
     background: #b52a36;
     transform: scale(1.15);
+    border-radius: 12px;
+    size: 20px;
 }
 
-/* Icono EDITAR (pen) */
-td a i.bx-pen-alt {
-    color: #ffffff;
-    background: #0056be;
-}
-
-td a i.bx-pen-alt:hover {
-    background: #003e8b;
-    transform: scale(1.15);
-}
 
 /*BOTÓN*/
 
