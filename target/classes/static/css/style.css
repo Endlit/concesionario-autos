@@ -192,6 +192,8 @@ main p {
     transform: translateY(10px);
 }
 
+/*errores*/
+
 .error-msg {
     color: red;
     font-size: 0.85em;
@@ -202,3 +204,5 @@ input.input-error,
 select.input-error {
     border: 2px solid red;
 }
+
+
